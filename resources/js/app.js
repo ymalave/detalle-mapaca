@@ -6,6 +6,7 @@ import "../css/style.css";
 // import persist from "@alpinejs/persist";
 // const persist = require('@alpinejs/persist');
 import 'flowbite';
+import mask from '@alpinejs/mask'
 import flatpickr from "flatpickr";
 import chart01 from "./components/chart-01";
 import chart02 from "./components/chart-02";
@@ -14,7 +15,7 @@ import chart04 from "./components/chart-04";
 import map01 from "./components/map-01";
 
 window.Alpine = Alpine;
-
+Alpine.plugin(mask)
 if (!Alpine.$persist) {
   // Only add the persist plugin if it hasn't been added yet
   Alpine.plugin(Alpine.persist);

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre', 100)->comment('Nombre del producto');
             $table->string('marca', 100)->nullable();
             $table->bigInteger('cod_proveedor');
-            $table->integer('cant_stock');
+            $table->integer('cant_stock')->nullable()->default(0);
             $table->decimal('precio_venta', 10, 2);
             $table->decimal('precio_proveedor', 10, 2);
 

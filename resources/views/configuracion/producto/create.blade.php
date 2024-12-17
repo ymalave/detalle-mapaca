@@ -7,14 +7,14 @@
                         <li>
                             <a class="font-medium" href="{{route('dashboard')}}">Pagina Principal /</a>
                         </li>
-                        <li><a class="font-medium" href="{{route('configuracion.proveedor.index')}}">Proveedores /</a></li>
+                        <li><a class="font-medium" href="{{route('configuracion.producto.index')}}">Productos /</a></li>
                         <li class="font-medium text-primary">Nuevo</li>
                     </ol>
                 </nav>
             </div>
         </div>
-        <x-form class="max-w-7xl mx-auto sm:px-2 lg:px-5" method="post" action="{{ route('configuracion.proveedor.store') }}">
-            @include('configuracion.proveedor.partials._form', ['type' => 'store', 'submit_text' => 'Guardar'])
+        <x-form class="max-w-7xl mx-auto sm:px-2 lg:px-5" method="post" action="{{ route('configuracion.producto.store') }}">
+            @include('configuracion.producto.partials._form', ['type' => 'store', 'submit_text' => 'Guardar'])
         </x-form>
     </div>
 </x-app-layout>

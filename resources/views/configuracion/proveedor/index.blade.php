@@ -36,11 +36,14 @@
                     <div class="mb-4 ml-auto">
                         <x-input type="text" placeholder="Buscar" x-model="search" />
                     </div>
-                    <div class="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4">
+                    <div class="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
+                        <div class="p-2.5 xl:p-5">
+                            <h5 class="text-sm font-medium uppercase xsm:text-base">Cod. Proveedor</h5>
+                        </div>
                         <div class="p-2.5 xl:p-5">
                             <h5 class="text-sm font-medium uppercase xsm:text-base">Rif</h5>
                         </div>
-                        <div class="p-2.5 text-center xl:p-5">
+                        <div class="p-2.5 xl:p-5">
                             <h5 class="text-sm font-medium uppercase xsm:text-base">Nombre</h5>
                         </div>
                         <div class="p-2.5 text-center xl:p-5">
@@ -52,7 +55,12 @@
                     </div>
 
                     <template x-for="(proveedor, key) in filteredProveedores()" :key="key">
-                        <div class="grid grid-cols-3 border-b border-stroke dark:border-strokedark sm:grid-cols-4">
+                        <div class="grid grid-cols-3 border-b border-stroke dark:border-strokedark sm:grid-cols-5">
+                            <div class="flex items-center gap-3 p-2.5 xl:p-5">
+                                <a :href="`{{ route('configuracion.proveedor.show', '') }}/${proveedor.cod_proveedor}`"
+                                    class="hidden font-medium text-primary sm:block" x-text="proveedor.cod_proveedor">
+                                </a>
+                            </div>
                             <div class="flex items-center gap-3 p-2.5 xl:p-5">
                                 <a :href="`{{ route('configuracion.proveedor.show', '') }}/${proveedor.cod_proveedor}`"
                                     class="hidden font-medium text-primary sm:block" x-text="proveedor.rif">
