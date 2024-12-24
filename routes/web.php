@@ -4,9 +4,26 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Configuracion\ClienteController;
 use App\Http\Controllers\Configuracion\ProductoController;
 use App\Http\Controllers\Configuracion\ProveedorController;
+use App\Http\Controllers\Gestion\PedidoController;
 
 Route::get('/', function () {
-    return view('welcome');
+    $marcas = [
+        'solita',
+        'sharpie',
+        'pointer',
+        'pentel',
+        'paper-mate',
+        'ok',
+        'maped',
+        'norma',
+        'kores',
+        'faber-castell',
+        'crisvi',
+        'crayola',
+        'barrilito'
+    ];
+    shuffle($marcas);
+    return view('welcome', compact('marcas'));
 });
 
 Route::middleware([
@@ -59,6 +76,24 @@ Route::middleware([
                     Route::post('/store', 'store')->name('store');
                     Route::get('/delete/{producto}', 'destroy')->name('delete');
                 });
+        });
+
+
+    Route::prefix('gestion')
+    ->name('gestion.')
+    ->group(function () {
+        Route::prefix('pedido')
+            ->name('pedido.')
+            ->controller(PedidoController::class)
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/show/{pedido}', 'show')->name('show');
+                Route::get('/edit/{pedido}', 'edit')->name('edit');
+                Route::put('/update/{pedido}', 'update')->name('update');
+                Route::get('/create', 'create')->name('create');
+                Route::post('/store', 'store')->name('store');
+                Route::get('/delete/{pedido}', 'destroy')->name('delete');
+            });
         });
 
 });
