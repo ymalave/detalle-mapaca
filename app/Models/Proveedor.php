@@ -25,4 +25,8 @@ class Proveedor extends Model
         'cedula_representante',
         'nombre_representante',
     ];
+
+    public function productos(){
+        return $this->hasMany(Producto::class, 'cod_proveedor', 'cod_proveedor');
+    }
 }

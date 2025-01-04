@@ -27,4 +27,8 @@ class Pedido extends Model
     public function proveedor(){
         return $this->hasOne(Proveedor::class, 'cod_proveedor', 'cod_proveedor');
     }
+
+    public function producto_pedido(){
+        return $this->hasMany(ProductoPedido::class, 'nro_pedido', 'nro_pedido');
+    }
 }
