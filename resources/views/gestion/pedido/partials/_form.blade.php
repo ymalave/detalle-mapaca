@@ -42,7 +42,7 @@
                         </p>
                     @endif
                 </div>
-                <x-search-proveedor type="{{ $type }}"/>
+                <x-search-proveedor type="{{ $type == 'edit' ? 'show': $type }}"/>
                 <div>
                     <x-label for="fecha_recepcion" error="{{ $errors->has('fecha_recepcion') }}">Fecha Recepcion</x-label>
 
@@ -62,6 +62,7 @@
 
                     <label class="inline-flex items-center mb-5 cursor-pointer">
                         <x-input type="checkbox" x-model="cerrado" class="sr-only peer"  />
+                        <x-input type="hidden" name="cerrado" x-model="cerrado" class="sr-only peer"  />
                         <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                     </label>
 
@@ -80,7 +81,6 @@
                         </p>
                     @endif
                 </div>
-
 
             </div>
 
@@ -218,8 +218,16 @@
                                         <x-input type="hidden"  x-bind:name="`producto_pedido[${key}][monto]`" x-model="item.monto" />
                                     </td>
                                     <td class="px-6 py-4">
-                                        <span x-text="item.recibido"></span>
-                                        <x-input type="hidden"  x-bind:name="`producto_pedido[${key}][recibido]`" x-model="item.recibido" />
+                                        @if($type != 'edit')
+                                            <span x-text="item.recibido"></span>
+                                            <x-input type="hidden"  x-bind:name="`producto_pedido[${key}][recibido]`" x-model="item.recibido" />
+                                        @else
+                                            <label class="inline-flex items-center mb-5 cursor-pointer">
+                                                <x-input type="checkbox" x-bind:name="`producto_pedido[${key}][recibido]`" x-model="item.recibido" class="sr-only peer"  />
+                                                <x-input type="hidden" x-bind:name="`producto_pedido[${key}][recibido]`" x-model="item.recibido" class="sr-only peer"  />
+                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                            </label>
+                                        @endif
                                     </td>
                                 </tr>
                             </template>
@@ -285,6 +293,7 @@
                             this.onProveedorChange(); // Call the function when selectedProveedor changes
                         }
                     });
+
                 },
 
 
@@ -350,7 +359,7 @@
                     }else{
                         const index = this.producto_pedido.findIndex((producto_p) => producto_p.cod_producto == this.selectedProducto);
                         const cantidad = parseInt(find.cantidad) + parseInt(this.cant_pedido);
-                        const precioProducto =parseFloat(find.monto) + parseFloat(this.precio_producto);
+                        const precioProducto =parseFloat(find.monto) + parseFloat(this.precio_pedido);
                         this.producto_pedido[index] = {
                             ...this.producto_pedido[index],
                             cantidad: cantidad,

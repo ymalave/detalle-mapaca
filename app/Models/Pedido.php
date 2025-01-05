@@ -29,6 +29,6 @@ class Pedido extends Model
     }
 
     public function producto_pedido(){
-        return $this->hasMany(ProductoPedido::class, 'nro_pedido', 'nro_pedido');
+        return $this->hasMany(ProductoPedido::class, 'nro_pedido', 'nro_pedido')->orderBy('id', 'ASC');
     }
 }

@@ -81,9 +81,9 @@
                                         class="hover:text-primary">
                                         <i class="fa-regular fa-pen-to-square"></i>
                                     </a>
-                                    <button class="hover:text-primary" @click.prevent="deleteItem(pedido)">
+                                    {{--  <button class="hover:text-primary" @click.prevent="deleteItem(pedido)">
                                         <i class="fa-regular fa-trash-can"></i>
-                                    </button>
+                                    </button>  --}}
                                 </div>
                             </div>
                         </div>

@@ -5,8 +5,7 @@
             <div class="mb-3">
                 <div class="flex">
                     <x-input  name="nombre_proveedor" x-bind:style="bloquear_proveedor"
-                        class="rounded-none rounded-s-lg"
-                        x-bind:class="type == 'show' ? 'rounded-e-lg' : ''"
+                        class="{{ $type == 'show' ? 'rounded-e-lg' : 'rounded-none rounded-s-lg' }}"
                         x-model="nombre_proveedor" />
                     <x-input name="cod_proveedor" type="hidden" x-model="selectedValue" />
                     @if ($type != 'show')

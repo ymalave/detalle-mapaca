@@ -22,7 +22,7 @@ class PedidoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nro_pedido' =>  $this->isMethod('PUT') ? 'required|unique:pedido': 'nullable',
+            'nro_pedido' =>  $this->isMethod('PUT') ? 'required': 'nullable',
             'cod_proveedor' => 'required',
             'nombre_proveedor' => 'required',
             'fecha_solicitud' => 'required',
