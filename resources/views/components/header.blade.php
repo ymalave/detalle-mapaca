@@ -224,7 +224,7 @@
                             </a>
                         </li>
                     </ul>
-                    <button
+                    <!-- <button
                         class="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
                         <svg class="fill-current" width="22" height="22" viewBox="0 0 22 22"
                             fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -236,7 +236,13 @@
                                 fill="" />
                         </svg>
                         Log Out
-                    </button>
+                    </button> -->
+                    <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Salir
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
                 </div>
                 <!-- Dropdown End -->
             </div>
