@@ -20,7 +20,7 @@ class PedidoController extends Controller
     public function index()
     {
         $pedidos = Pedido::select('pedido.nro_pedido', 'pedido.cod_proveedor', 'p.nombre', DB::raw('to_char(pedido.fecha_solicitud, \'DD/MM/YYYY\') as fecha_solicitud'), 'pedido.cerrado')
-                        ->join('proveedores as p', 'pedido.cod_proveedor', '=', 'p.cod_proveedor')->get();
+                        ->join('proveedores as p', 'pedido.cod_proveedor', '=', 'p.cod_proveedor')->orderBy('nro_pedido', 'DESC')->get();
         return view('gestion.pedido.index', compact('pedidos'));
     }
 
@@ -111,17 +111,34 @@ class PedidoController extends Controller
      */
     public function update(PedidoRequest $request, Pedido $pedido)
     {
-        // dd($request);
+
         try{
             DB::connection()->beginTransaction();
             $producto_pedido = $request->producto_pedido;
             $pedido->update([
                     'fecha_recepcion' => $request->fecha_recepcion,
-                    'cerrado' => $request->cerrado ? true: false
+                    'cerrado' => $request->cerrado
                 ]);
 
+            $producto_ped_ant = $pedido->producto_pedido;
             if(isset($producto_pedido)){
                 foreach($producto_pedido as $key => $item){
+                    // dd($request->cerrado, $item['recibido']);
+                    if($request->cerrado == 'true' && $item['recibido'] == 'true'){
+                        $producto = Producto::find($item['cod_producto']);
+
+                        $cant_ant = $producto_ped_ant->where('cod_producto', $item['cod_producto'])->first()?->cantidad;
+
+                        (int)$producto->cant_stock > 0 ? $cant_act = (int)$producto->cant_stock - (int)$cant_ant: $cant_act = 0;
+
+
+                        $cant_now = (int)$cant_act + (int)$item['cantidad'];
+
+                        $producto->cant_stock = $cant_now;
+                        $producto->save();
+
+                    }
+
                     ProductoPedido::updateOrCreate(
                         [
                             'nro_pedido' => $pedido->nro_pedido,
@@ -133,6 +150,8 @@ class PedidoController extends Controller
                             'recibido' => $item['recibido']
                         ]
                     );
+
+
                 }
             }
 
