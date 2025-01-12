@@ -168,7 +168,6 @@
                         },
 
                         nextPage() {
-                            console.log('AAAAAAA');
                             if (this.currentPage < this.getTotalPages()) {
                                 this.currentPage++;
                             }

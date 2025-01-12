@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Configuracion;
 
 use App\Models\Producto;
 use App\Models\Proveedor;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
+use App\Models\DatoGeneral;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -28,7 +27,9 @@ class ProductoController extends Controller
     public function create()
     {
         $proveedores = Proveedor::select('cod_proveedor', 'nombre as nombre_proveedor')->get();
-        return view('configuracion.producto.create', compact('proveedores'));
+
+        $porc_desc = DatoGeneral::find(2)?->valor;
+        return view('configuracion.producto.create', compact('proveedores', 'porc_desc'));
     }
 
     /**
@@ -48,7 +49,7 @@ class ProductoController extends Controller
         }catch(\Exception $e){
             DB::connection()->rollBack();
             Log::error($e->getMessage(), ['exception' => $e]);
-            alert()->error('Transacción Fallida: ' . Str::limit($e->getMessage(), 200));
+            alert()->error('Transacción Fallida');
             return redirect()->back()->withInput();
         }
     }
@@ -67,7 +68,9 @@ class ProductoController extends Controller
     public function edit(Producto $producto)
     {
         $proveedores = Proveedor::select('cod_proveedor', 'nombre as nombre_proveedor')->get();
-        return view('configuracion.producto.edit', compact('producto', 'proveedores'));
+
+        $porc_desc = DatoGeneral::find(2)?->valor;
+        return view('configuracion.producto.edit', compact('producto', 'proveedores', 'porc_desc'));
     }
 
     /**
@@ -87,7 +90,7 @@ class ProductoController extends Controller
         }catch(\Exception $e){
             DB::connection()->rollBack();
             Log::error($e->getMessage(), ['exception' => $e]);
-            alert()->error('Transacción Fallida: ' . Str::limit($e->getMessage(), 200));
+            alert()->error('Transacción Fallida');
             return redirect()->back()->withInput();
         }
     }
@@ -108,7 +111,7 @@ class ProductoController extends Controller
         }catch(\Exception $e){
             DB::connection()->rollBack();
             Log::error($e->getMessage(), ['exception' => $e]);
-            alert()->error('Transacción Fallida: ' . Str::limit($e->getMessage(), 200));
+            alert()->error('Transacción Fallida');
             return redirect()->back()->withInput();
         }
     }

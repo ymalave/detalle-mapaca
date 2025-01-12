@@ -16,10 +16,10 @@ return new class extends Migration
             $table->bigInteger('nro_venta');
             $table->bigInteger('cod_producto');
             $table->integer('cantidad');
-            $table->decimal('monto', 15, 2);
+            $table->decimal('monto', 20, 2);
+            $table->decimal('monto_bs', 20, 2);
             $table->timestamps();
             $table->softDeletes();
-
             $table->foreign('cod_producto', 'SFK_VENTA_DETALLE_1')->references('cod_producto')->on('producto');
             $table->foreign('nro_venta', 'SFK_VENTA_DETALLE_2')->references('nro_venta')->on('venta');
         });

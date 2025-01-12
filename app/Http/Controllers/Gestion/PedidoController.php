@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Gestion;
 use App\Models\Pedido;
 use App\Models\Producto;
 use App\Models\Proveedor;
-use Illuminate\Support\Str;
 use App\Models\ProductoPedido;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -69,7 +68,7 @@ class PedidoController extends Controller
         }catch(\Exception $e){
             DB::connection()->rollBack();
             Log::error($e->getMessage(), ['exception' => $e]);
-            alert()->error('Transacción Fallida: ' . Str::limit($e->getMessage(), 200));
+            alert()->error('Transacción Fallida');
             return redirect()->back()->withInput();
         }
     }
@@ -129,7 +128,7 @@ class PedidoController extends Controller
 
                         $cant_ant = $producto_ped_ant->where('cod_producto', $item['cod_producto'])->first()?->cantidad;
 
-                        (int)$producto->cant_stock > 0 ? $cant_act = (int)$producto->cant_stock - (int)$cant_ant: $cant_act = 0;
+                        $cant_act = (int)$producto->cant_stock;
 
 
                         $cant_now = (int)$cant_act + (int)$item['cantidad'];
@@ -161,7 +160,7 @@ class PedidoController extends Controller
         }catch(\Exception $e){
             DB::connection()->rollBack();
             Log::error($e->getMessage(), ['exception' => $e]);
-            alert()->error('Transacción Fallida: ' . Str::limit($e->getMessage(), 200));
+            alert()->error('Transacción Fallida');
             return redirect()->back()->withInput();
         }
     }

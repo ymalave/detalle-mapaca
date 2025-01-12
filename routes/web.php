@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Configuracion\ClienteController;
+use App\Http\Controllers\Configuracion\DatoGeneralController;
 use App\Http\Controllers\Configuracion\ProductoController;
 use App\Http\Controllers\Configuracion\ProveedorController;
 use App\Http\Controllers\Gestion\OrdenVentaController;
@@ -76,6 +77,14 @@ Route::middleware([
                     Route::get('/create', 'create')->name('create');
                     Route::post('/store', 'store')->name('store');
                     Route::get('/delete/{producto}', 'destroy')->name('delete');
+                });
+
+            Route::prefix('dato-general')
+                ->name('dato_general.')
+                ->controller(DatoGeneralController::class)
+                ->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::post('/update/{dato_general}', 'update')->name('update');
                 });
         });
 

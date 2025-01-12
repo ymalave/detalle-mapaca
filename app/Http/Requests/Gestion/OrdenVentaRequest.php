@@ -28,12 +28,13 @@ class OrdenVentaRequest extends FormRequest
             'nombre_usuario' => 'required',
             'fecha_solicitud' => 'required',
             'monto_total' => 'required',
-            'estado' => 'required',
+            'monto_total_bs' => 'required',
 
             'venta_detalle.*.nro_venta' => 'nullable',
             'venta_detalle.*.cod_producto' => 'required',
             'venta_detalle.*.cantidad' => 'required',
             'venta_detalle.*.monto' => 'required',
+            'venta_detalle.*.monto_bs' => 'required',
 
         ];
     }
@@ -41,12 +42,10 @@ class OrdenVentaRequest extends FormRequest
     public function attributes()
     {
         return [
-            'nro_pedido' =>  'Nro. Pedido',
-            'cod_proveedor' => 'Cod. Proveedor',
-            'nombre_proveedor' => 'proveedor',
+            'nro_venta' =>  'Nro. fact',
+            'cedula_cliente' => 'Cedula cliente',
+            'nombre_cliente' => 'cliente',
             'fecha_solicitud' => 'fecha solicitud',
-            'fecha_recepcion' => 'fecha recep',
-            'cerrado' => 'cerrado',
 
             'venta_detalle.*.nro_pedido' => 'Nro. Pedido',
             'venta_detalle.*.cod_producto' => 'Cod. Proveedor',

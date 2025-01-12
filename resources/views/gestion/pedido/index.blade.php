@@ -19,7 +19,7 @@
                         <li>
                             <a class="font-medium" href="{{ route('dashboard') }}">Página Principal /</a>
                         </li>
-                        <li class="font-medium text-primary">Pedidos</li>
+                        <li class="font-medium text-primary">Orden de Compra</li>
                     </ol>
                 </nav>
             </div>
@@ -185,30 +185,6 @@
                     this.currentPage = page;
                 },
 
-                deleteItem(pedido) {
-                    const route = `{{ route('gestion.pedido.delete', '') }}/${pedido.nro_pedido}`;
-                    Swal.fire({
-                        icon: 'warning',
-                        title: '¿Estas Seguro?',
-                        html: 'El registro se borrara de forma permanente',
-                        showCancelButton: true,
-                        showConfirmButton: true,
-                        confirmButtonText: "Si, Eliminar",
-                        cancelButtonText: "Cancelar"
-                    }).then(result => {
-                        if (result.isConfirmed) {
-                            try {
-                                window.location.href = route;
-                            } catch (error) {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error',
-                                    text: 'Ocurrió un error al eliminar el registro. Por favor, inténtalo de nuevo.'
-                                });
-                            }
-                        }
-                    })
-                }
 
             };
         }

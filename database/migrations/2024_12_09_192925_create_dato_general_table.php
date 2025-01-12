@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('dato_general', function (Blueprint $table) {
             $table->id();
+            $table->string('descripcion', 50)->comment('Nombre del dato');
+            $table->string('valor', 50)->comment('Valor');
             $table->timestamps();
         });
     }

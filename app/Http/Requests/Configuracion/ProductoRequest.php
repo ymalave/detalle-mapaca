@@ -51,13 +51,7 @@ class ProductoRequest extends FormRequest
     public function messages()
     {
         return [
-            'cod_producto.required' => 'La :attribute es obligatoria.',
-            'cod.proveedor.required' => 'El :attribute es obligatorio.',
-            'nombre.required' => 'El campo :attribute es obligatorio',
-            'marca.required' => 'El campo :attribute es obligatorio',
-            'precio_venta.required' => 'El campo :attribute es obligatorio',
-            'precio_proveedor.required' => 'El campo :attribute es obligatorio',
-            'nombre_proveedor.required' => 'El campo :attribute es obligatorio',
+            'required' => 'El campo :attribute es obligatorio.',
         ];
     }
 }

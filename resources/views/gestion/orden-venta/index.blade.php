@@ -19,7 +19,7 @@
                         <li>
                             <a class="font-medium" href="{{ route('dashboard') }}">Página Principal /</a>
                         </li>
-                        <li class="font-medium text-primary">Orden de Venta</li>
+                        <li class="font-medium text-primary">Facturación</li>
                     </ol>
                 </nav>
             </div>

@@ -19,7 +19,7 @@ class Venta extends Model
         'nro_venta',
         'nro_cliente',
         'monto_total',
-        'estado',
+        'monto_total_bs',
         'usuario',
     ];
 

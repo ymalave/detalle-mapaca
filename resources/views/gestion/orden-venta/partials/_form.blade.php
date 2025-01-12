@@ -1,7 +1,7 @@
 <div x-data="data()">
     <div class="w-full p-4 bg-white border-t-4 border-indigo-800 rounded-lg shadow-lg sm:p-8 dark:bg-gray-800">
         <div class="flex items-center justify-between mb-4">
-            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Orden de Venta</h5>
+            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Factura</h5>
         </div>
         <div class="flow-root">
             <div class="grid gap-4 mb-6 md:grid-cols-3">
@@ -197,6 +197,9 @@
                             <th scope="col" class="px-6 py-3">
                                 Precio
                             </th>
+                            <th scope="col" class="px-6 py-3">
+                                Precio Bs
+                            </th>
                             <th scope="col" class="px-6 py-3"></th>
 
                         </tr>
@@ -227,6 +230,11 @@
                                         <x-input type="hidden" x-bind:name="`venta_detalle[${key}][monto]`"
                                             x-model="item.monto" />
                                     </td>
+                                    <td class="px-6 py-4">
+                                        <span x-text="item.monto_bs"></span>
+                                        <x-input type="hidden" x-bind:name="`venta_detalle[${key}][monto_bs]`"
+                                            x-model="item.monto_bs" />
+                                    </td>
 
                                     <td width="50px" class="px-6 py-4">
                                         <x-button class="text-xs font-medium text-center" style="indigo"
@@ -241,7 +249,7 @@
 
                         <template x-if="venta_detalle.length <= 0">
                             <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="text-center px-6 py-4 text-gray-900" colspan="4">
+                                <td class="text-center px-6 py-4 text-gray-900" colspan="6">
                                     <span>No se encontraron registros</span>
                                 </td>
 
@@ -271,22 +279,17 @@
                 </div>
 
                 <div>
-                    <x-label for="estado" error="{{ $errors->has('estado') }}">
-                        Estado
+                    <x-label for="monto_total_bs" error="{{ $errors->has('monto_total_bs') }}">
+                        Monto Total Bs
                     </x-label>
 
-                    <x-select id="estado" name="estado" x-model="estado"
-                        style="{{ $type == 'show' ? 'pointer-events: none' : '' }}"
-                        error="{{ $errors->has('estado') }}">
-                        <option value="" selected hidden>-- Seleccione --</option>
-                        <option value="PENDIENTE">PENDIENTE</option>
-                        <option value="EN PROCESO">EN PROCESO</option>
-                        <option value="FACTURADA">FACTURADA</option>
-                    </x-select>
 
-                    @if ($errors->has('estado'))
+                    <x-input type="number" name="monto_total_bs" x-model="monto_total_bs" class="uppercase" step="0.01"
+                        error="{{ $errors->has('monto_total_bs') }}" readonly="{{ $type != 'store' }}" />
+
+                    @if ($errors->has('monto_total_bs'))
                         <p class="mt-2 text-sm text-red-600 dark:text-red-500">
-                            @error('estado')
+                            @error('monto_total_bs')
                                 {{ $message }}
                             @enderror
                         </p>
@@ -314,13 +317,15 @@
                 cedula_cliente: '{{ old("cedula_cliente", $cliente->cedula_cliente ?? '') }}',
                 nombre_cliente: '{{ old("nombre_cliente", $cliente->nombre_cliente ?? '') }}',
                 nombre_usuario: '{{ old("nombre_usuario", $user->name ?? '') }}',
-                fecha_solicitud: '{{ old("fecha_solicitud", $venta->created_at->format("Y-m-d") ?? now()->format("Y-m-d")) }}',
-                monto_total: '{{ old("monto_total", $venta->monto_total ?? 0) }}',
-                nro_cliente: '{{ old("nro_cliente", $venta->nro_cliente ?? '') }}',
-                estado: '{{ old("estado", $venta->estado ?? '') }}',
+                fecha_solicitud: '{{ old("fecha_solicitud", $type != "store" ? $venta?->created_at?->format("Y-m-d"): now()->format("Y-m-d")) ?? ''}}',
+                monto_total: '{{ old("monto_total", $venta?->monto_total ?? 0) }}',
+                monto_total_bs: '{{ old("monto_total_bs", $venta?->monto_total_bs ?? 0) }}',
+                nro_cliente: '{{ old("nro_cliente", $venta?->nro_cliente ?? '') }}',
 
                 productos: @json(@old('productos', $productos ?? [])),
                 venta_detalle: @json(@old('venta_detalle', $venta_detalle ?? [])),
+
+                valor_dolar: "{{ old('valor_dolar', $valor_dolar ?? 1) }}",
 
                 selectedProducto: -1,
                 search_producto: '',
@@ -378,12 +383,14 @@
                     .selectedProducto);
 
                     if (!find) {
-                        if (this.selectedProducto != -1 && this.cant_pedido != null) {
+                        if (this.selectedProducto != -1 && this.cant_pedido != null ) {
+                            const precioProductoBs = parseFloat(this.precio_pedido) * parseFloat(this.valor_dolar);
                             this.venta_detalle.push({
                                 cod_producto: this.selectedProducto,
                                 nombre_producto: this.nombre_producto,
                                 cantidad: this.cant_pedido,
                                 monto: this.precio_pedido,
+                                monto_bs: precioProductoBs.toFixed(2),
                                 recibido: 'NO'
                             });
                         } else {
@@ -394,10 +401,12 @@
                             .selectedProducto);
                         const cantidad = parseInt(find.cantidad) + parseInt(this.cant_pedido);
                         const precioProducto = parseFloat(find.monto) + parseFloat(this.precio_pedido);
+                        const precioProductoBs = parseFloat(precioProducto) * parseFloat(this.valor_dolar);
                         this.venta_detalle[index] = {
                             ...this.venta_detalle[index],
                             cantidad: cantidad,
                             monto: precioProducto.toFixed(2),
+                            monto_bs: precioProductoBs.toFixed(2)
                         }
                     }
 
@@ -439,7 +448,8 @@
                         suma += parseFloat(det_venta.monto);
                     })
 
-                    this.monto_total = suma;
+                    this.monto_total = suma.toFixed(2);
+                    this.monto_total_bs = (suma * parseFloat(this.valor_dolar)).toFixed(2);
                 },
 
                 editProducto(info, key){

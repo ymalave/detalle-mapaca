@@ -59,10 +59,7 @@ class ProveedorRequest extends FormRequest
     public function messages()
     {
         return [
-            'proveedor.rif.required' => 'La :attribute es obligatoria.',
-            'proveedor.rif.unique' => 'La :attribute ya existe.',
-            'cliente.nombre.required' => 'El campo :attribute es obligatorio',
-            'cliente.direccion.required' => 'El campo :attribute es obligatorio',
+            'required' => 'El campo :attribute es obligatorio.',
         ];
     }
 }

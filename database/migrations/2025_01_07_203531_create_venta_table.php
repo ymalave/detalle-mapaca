@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('venta', function (Blueprint $table) {
             $table->id('nro_venta');
             $table->unsignedInteger('nro_cliente')->comment('Campo que contiene el id del cliente');
-            $table->unsignedDecimal('monto_total', 10, 2)->comment('Campo debe ser llenado automaticamente con la suma de los precios venta de cada producto');
-            $table->string('estado', 25)->comment('refleja el estafo de la venta, en proceso, pendiente o facturada');
+            $table->decimal('monto_total', 20, 2)->comment('Campo debe ser llenado automaticamente con la suma de los precios venta de cada producto');
+            $table->decimal('monto_total_bs', 20, 2)->comment('Campo debe ser llenado automaticamente con la suma de los precios venta de cada producto y convertido a bolivares');
+            // $table->string('estado', 25)->comment('refleja el estafo de la venta, en proceso, pendiente o facturada');
             $table->unsignedInteger('usuario')->comment('Campo con el id del usuario que genera o modifica la orden de venta');
             $table->timestamps();
             $table->softDeletes();

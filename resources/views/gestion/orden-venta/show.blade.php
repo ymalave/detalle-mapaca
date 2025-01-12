@@ -7,7 +7,7 @@
                         <li>
                             <a class="font-medium" href="{{route('dashboard')}}">Pagina Principal /</a>
                         </li>
-                        <li><a class="font-medium" href="{{route('gestion.orden_venta.index')}}">Orden de Venta /</a></li>
+                        <li><a class="font-medium" href="{{route('gestion.orden_venta.index')}}">Facturación /</a></li>
                         <li class="font-medium text-primary">Visualización</li>
                     </ol>
                 </nav>

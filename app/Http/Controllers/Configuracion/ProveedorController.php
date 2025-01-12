@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Configuracion;
 
 use App\Models\Proveedor;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -46,7 +44,7 @@ class ProveedorController extends Controller
         }catch(\Exception $e){
             DB::connection()->rollBack();
             Log::error($e->getMessage(), ['exception' => $e]);
-            alert()->error('Transacción Fallida: ' . Str::limit($e->getMessage(), 200));
+            alert()->error('Transacción Fallida');
             return redirect()->back()->withInput();
         }
     }
@@ -84,7 +82,7 @@ class ProveedorController extends Controller
         }catch(\Exception $e){
             DB::connection()->rollBack();
             Log::error($e->getMessage(), ['exception' => $e]);
-            alert()->error('Transacción Fallida: ' . Str::limit($e->getMessage(), 200));
+            alert()->error('Transacción Fallida');
             return redirect()->back()->withInput();
         }
     }
@@ -105,7 +103,7 @@ class ProveedorController extends Controller
         }catch(\Exception $e){
             DB::connection()->rollBack();
             Log::error($e->getMessage(), ['exception' => $e]);
-            alert()->error('Transacción Fallida: ' . Str::limit($e->getMessage(), 200));
+            alert()->error('Transacción Fallida');
             return redirect()->back()->withInput();
         }
     }

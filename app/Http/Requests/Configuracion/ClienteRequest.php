@@ -48,11 +48,7 @@ class ClienteRequest extends FormRequest
     public function messages()
     {
         return [
-            'cliente.cedula_cliente.required' => 'La :attribute es obligatoria.',
-            'cliente.cedula_cliente.unique' => 'La :attribute ya existe.',
-            'cliente.nombres.required' => 'El campo :attribute es obligatorio',
-            'cliente.apellidos.required' => 'El campo :attribute es obligatorio',
-            'cliente.direccion.required' => 'El campo :attribute es obligatorio',
+            'required' => 'El campo :attribute es obligatorio.',
         ];
     }
 }

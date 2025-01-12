@@ -90,6 +90,7 @@
                         <x-input type="number" name="precio_proveedor" class="rounded-none rounded-e-lg"
                             x-model="precio_proveedor" readonly="{{ $type == 'show' }}"
                             step="0.01"
+                            @change="addPorcentaje()"
                             error="{{ $errors->has('precio_proveedor') }}" />
                     </div>
                     @if ($errors->has('precio_proveedor'))
@@ -148,6 +149,7 @@
                 precio_venta: "{{ old('precio_venta', $producto->precio_venta ?? '') }}",
                 cod_proveedor:  "{{ old('cod_proveedor', $producto->cod_proveedor ?? '') }}",
                 nombre_proveedor:  "{{ old('nombre_proveedor', $producto->proveedor->nombre ?? '') }}",
+                porc_desc: "{{ old('porc_desc', $porc_desc ?? 0) }}",
 
                 proveedores: @json($proveedores ?? []),
 
@@ -158,7 +160,12 @@
                         const proveedor = @json($producto->proveedor ?? []);
                         this.seleccionarProveedor(proveedor);
                     }
+                },
+
+                addPorcentaje(){
+                    this.precio_venta = (parseFloat(this.precio_proveedor) + (parseFloat(this.precio_proveedor) * (parseFloat(this.porc_desc) / 100))).toFixed(2);
                 }
+
             }
         }
     </script>

@@ -36,7 +36,7 @@
                     <div class="mb-4 ml-auto">
                         <x-input type="text" placeholder="Buscar" x-model="search" />
                     </div>
-                    <div class="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
+                    <div class="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-6">
                         <div class="p-2.5 xl:p-5">
                             <h5 class="text-sm font-medium uppercase xsm:text-base">Cod. Producto</h5>
                         </div>
@@ -49,13 +49,16 @@
                         <div class="p-2.5 text-end xl:p-5">
                             <h5 class="text-sm font-medium uppercase xsm:text-base">Precio Venta</h5>
                         </div>
+                        <div class="p-2.5 text-center xl:p-5">
+                            <h5 class="text-sm font-medium uppercase xsm:text-base">Cantidad Disponible</h5>
+                        </div>
                         <div class="hidden p-2.5 text-center sm:block xl:p-5">
                             <h5 class="text-sm font-medium uppercase xsm:text-base">Acción</h5>
                         </div>
                     </div>
 
                     <template x-for="(producto, key) in filteredProductos()" :key="key">
-                        <div class="grid grid-cols-3 border-b border-stroke dark:border-strokedark sm:grid-cols-5">
+                        <div class="grid grid-cols-3 border-b border-stroke dark:border-strokedark sm:grid-cols-6">
                             <div class="flex items-center gap-3 p-2.5 xl:p-5">
                                 <a :href="`{{ route('configuracion.producto.show', '') }}/${producto.cod_producto}`"
                                     class="hidden font-medium text-primary sm:block" x-text="producto.cod_producto">
@@ -72,6 +75,9 @@
 
                             <div class="flex items-rigth justify-end p-2.5 xl:p-5">
                                 <p class="font-medium text-black dark:text-white" x-text="'$ '+producto.precio_venta"></p>
+                            </div>
+                            <div class="flex items-rigth justify-center p-2.5 xl:p-5">
+                                <p class="font-medium text-black dark:text-white" x-text="producto.cant_stock"></p>
                             </div>
 
 

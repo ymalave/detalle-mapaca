@@ -19,5 +19,6 @@ class VentaDetalle extends Model
         'cod_producto',
         'cantidad',
         'monto',
+        'monto_bs'
     ];
 }
